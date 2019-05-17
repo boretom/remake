@@ -27,6 +27,11 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
+use File::Basename;
+my $mydir = dirname(__FILE__);
+
+push @INC, $mydir;
+
 %FEATURES = ();
 
 $valgrind = 0;              # invoke make with valgrind

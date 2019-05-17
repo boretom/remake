@@ -32,6 +32,7 @@
 /configure
 /debian/remake.debhelper.log
 /loadavg
+/main.h
 /make
 /po-check-*
 /remake
@@ -41,3 +42,4 @@
 /test-profile
 /tmp
 callgrind.out.*
+.vscode
