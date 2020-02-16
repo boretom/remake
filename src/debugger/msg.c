@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (C) 2011
 R. Bernstein <rocky@gnu.org>
 This file is part of GNU Make (remake variant).
@@ -46,38 +46,38 @@ Boston, MA 02111-1307, USA.  */
 #endif
 
 /* Print an error message on stdout.  */
-void
-#if __STDC__ && HAVE_STDVARARGS
-dbg_errmsg(const char *fmt, ...)
-#else
-dbg_errmsg (const char *fmt, va_alist)
-#endif
-{
-#if HAVE_STDVARARGS
-  va_list args;
-#endif
-  fprintf(stdout, "** ");
-  VA_START (args, fmt);
-  VA_PRINTF (stdout, fmt, args);
-  VA_END (args);
-  fprintf (stdout, "\n");
-  fflush (stdout);
-}
+// void
+// #if __STDC__ && HAVE_STDVARARGS
+// dbg_errmsg(const char *fmt, ...)
+// #else
+// dbg_errmsg (const char *fmt, va_alist)
+// #endif
+// {
+// #if HAVE_STDVARARGS
+//   va_list args;
+// #endif
+//   fprintf(stdout, "** ");
+//   VA_START (args, fmt);
+//   VA_PRINTF (stdout, fmt, args);
+//   VA_END (args);
+//   fprintf (stdout, "\n");
+//   fflush (stdout);
+// }
 
 /* Print a message on stdout.  */
-void
-#if __STDC__ && HAVE_STDVARARGS
-dbg_msg(const char *fmt, ...)
-#else
-dbg_msg (const char *fmt, va_alist)
-#endif
-{
-#if HAVE_STDVARARGS
-  va_list args;
-#endif
-  VA_START (args, fmt);
-  VA_PRINTF (stdout, fmt, args);
-  VA_END (args);
-  fprintf (stdout, "\n");
-  fflush (stdout);
-}
+// void
+// #if __STDC__ && HAVE_STDVARARGS
+// dbg_msg(const char *fmt, ...)
+// #else
+// dbg_msg (const char *fmt, va_alist)
+// #endif
+// {
+// #if HAVE_STDVARARGS
+//   va_list args;
+// #endif
+//   VA_START (args, fmt);
+//   VA_PRINTF (stdout, fmt, args);
+//   VA_END (args);
+//   fprintf (stdout, "\n");
+//   fflush (stdout);
+// }

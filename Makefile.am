@@ -31,54 +31,54 @@ include_HEADERS = src/gnumake.h
 man_MANS =	doc/make.1
 
 DEBUGGER_SRC = 	\
-		debugger/break.c \
-		debugger/cmd.c 	\
-		debugger/fns.c 	\
-		debugger/file2line.c 	\
-		debugger/msg.c 	\
-		debugger/stack.c
+		src/debugger/break.c \
+		src/debugger/cmd.c 	\
+		src/debugger/fns.c 	\
+		src/debugger/file2line.c 	\
+		src/debugger/msg.c 	\
+		src/debugger/stack.c
 
 DEBUGGER_H = \
-		debugger/break.h 		\
-		debugger/cmd.h 			\
-		debugger/fns.h 			\
-		debugger/msg.h 			\
-		debugger/command/break.h 	\
-		debugger/command/chdir.h  	\
-		debugger/command/comment.h 	\
-		debugger/command/continue.h	\
-		debugger/command/delete.h 	\
-		debugger/command/down.h 	\
-		debugger/command/edit.h 	\
-		debugger/command/eval.h 	\
-		debugger/command/expand.h	\
-		debugger/command/finish.h	\
-		debugger/command/frame.h	\
-		debugger/command/help.h		\
-		debugger/command/info.h		\
-		debugger/command/list.h		\
-		debugger/command/next.h		\
-		debugger/command/print.h	\
-		debugger/command/pwd.h		\
-		debugger/command/quit.h		\
-		debugger/command/run.h		\
-		debugger/command/set.h		\
-		debugger/command/setq.h		\
-		debugger/command/setqx.h	\
-		debugger/command/shell.h	\
-		debugger/command/show.h		\
-		debugger/command/skip.h		\
-		debugger/command/source.h	\
-		debugger/command/step.h		\
-		debugger/command/target.h	\
-		debugger/command/up.h		\
-		debugger/command/where.h	\
-		debugger/command/write.h	\
-		debugger/file2line.h 	        \
-		debugger/fns.h 			\
-		debugger/info.h			\
-		debugger/stack.h		\
-		debugger/subcmd.h
+		src/debugger/break.h 		\
+		src/debugger/cmd.h 			\
+		src/debugger/fns.h 			\
+		src/debugger/msg.h 			\
+		src/debugger/command/break.h 	\
+		src/debugger/command/chdir.h  	\
+		src/debugger/command/comment.h 	\
+		src/debugger/command/continue.h	\
+		src/debugger/command/delete.h 	\
+		src/debugger/command/down.h 	\
+		src/debugger/command/edit.h 	\
+		src/debugger/command/eval.h 	\
+		src/debugger/command/expand.h	\
+		src/debugger/command/finish.h	\
+		src/debugger/command/frame.h	\
+		src/debugger/command/help.h		\
+		src/debugger/command/info.h		\
+		src/debugger/command/list.h		\
+		src/debugger/command/next.h		\
+		src/debugger/command/print.h	\
+		src/debugger/command/pwd.h		\
+		src/debugger/command/quit.h		\
+		src/debugger/command/run.h		\
+		src/debugger/command/set.h		\
+		src/debugger/command/setq.h		\
+		src/debugger/command/setqx.h	\
+		src/debugger/command/shell.h	\
+		src/debugger/command/show.h		\
+		src/debugger/command/skip.h		\
+		src/debugger/command/source.h	\
+		src/debugger/command/step.h		\
+		src/debugger/command/target.h	\
+		src/debugger/command/up.h		\
+		src/debugger/command/where.h	\
+		src/debugger/command/write.h	\
+		src/debugger/file2line.h 	        \
+		src/debugger/fns.h 			\
+		src/debugger/info.h			\
+		src/debugger/stack.h		\
+		src/debugger/subcmd.h
 
 make_SRCS =	src/ar.c src/arscan.c src/commands.c src/commands.h \
 		src/debug.h src/default.c src/dep.h src/dir.c src/expand.c \
@@ -89,7 +89,7 @@ make_SRCS =	src/ar.c src/arscan.c src/commands.c src/commands.h \
 		src/os.h src/output.c src/output.h src/read.c src/remake.c \
 		src/rule.c src/rule.h src/signame.c src/strcache.c \
 		src/variable.c src/variable.h src/version.c src/vpath.c \
-		$(DEBUGGER_SRC)
+		src/debugger.h $(DEBUGGER_SRC) $(DEBUGGER_H)
 
 w32_SRCS =	src/w32/pathstuff.c src/w32/w32os.c src/w32/compat/dirent.c \
 		src/w32/compat/posixfcn.c src/w32/include/dirent.h \
