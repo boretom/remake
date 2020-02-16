@@ -499,6 +499,8 @@ void out_of_memory () NORETURN;
 #define ONS(_t,_a,_f,_n,_s)   _t((_a), INTSTR_LENGTH + strlen (_s), \
                                  (_f), (_n), (_s))
 
+#define OUT_OF_MEM() O (fatal, NILF, _("virtual memory exhausted"))
+
 void die (int) NORETURN;
 void pfatal_with_name (const char *) NORETURN;
 void perror_with_name (const char *, const char *);

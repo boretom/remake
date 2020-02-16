@@ -1190,9 +1190,6 @@ start_job_command (child_t *child,
 #endif
 
   /* Print the command if appropriate.  */
-  if (just_print_flag || trace_flag
-      || (!(flags & COMMANDS_SILENT) && !run_silent))
-    OS (message, 0, "%s", p);
   {
     bool print_it =
 	(just_print_flag

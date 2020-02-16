@@ -184,9 +184,10 @@ fatal_err (target_stack_node_t *p_call, const char *fmt, ...)
 char *
 strerror (int errnum)
 {
-  extern int errno, sys_nerr;
+  extern int errno;
+  extern const int sys_nerr;
 #ifndef __DECC
-  extern char *sys_errlist[];
+  extern const char *const sys_errlist[];
 #endif
   static char buf[] = "Unknown error 12345678901234567890";
 

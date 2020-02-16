@@ -26,7 +26,7 @@ MAKE_HOST =	@MAKE_HOST@
 SUBDIRS =	lib po doc unittest
 
 bin_PROGRAMS =	make
-include_HEADERS = src/gnumake.h
+include_HEADERS = src/gnuremake.h
 
 man_MANS =	doc/make.1
 
@@ -80,7 +80,10 @@ DEBUGGER_H = \
 		src/debugger/stack.h		\
 		src/debugger/subcmd.h
 
-make_SRCS =	src/ar.c src/arscan.c src/commands.c src/commands.h \
+make_SRCS =	\
+		src/alloc.c src/buildargv.c src/file_basic.c src/globals.c \
+		src/profile.c src/print.c src/debug.c src/trace.c \
+    src/ar.c src/arscan.c src/commands.c src/commands.h \
 		src/debug.h src/default.c src/dep.h src/dir.c src/expand.c \
 		src/file.c src/filedef.h src/function.c src/getopt.c \
 		src/getopt.h src/getopt1.c src/gettext.h src/guile.c \
@@ -131,8 +134,10 @@ else
 endif
 
 if USE_CUSTOMS
+  # make_SOURCES += src/remote-cstms.c src/mock.c
   make_SOURCES += src/remote-cstms.c
 else
+  # make_SOURCES += src/remote-stub.c src/mock.c
   make_SOURCES += src/remote-stub.c
 endif
 
