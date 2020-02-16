@@ -643,7 +643,7 @@ AC_CONFIG_FILES([ \
 Makefile build.cfg lib/Makefile po/Makefile.in doc/Makefile \
   glob/Makefile \
   unittest/Makefile \
-  w32/Makefile \
+  src/w32/Makefile \
   tests/config-flags.pm
 ])
 # We don't need this: the standard automake output suffices for POSIX systems.
