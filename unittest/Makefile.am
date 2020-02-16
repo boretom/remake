@@ -2,16 +2,16 @@ AM_CPPFLAGS  = -I$(abs_top_srcdir)
 test_profile_SOURCES = test_profile.c
 
 test_profile_LDADD = \
-	../mock.o \
-	../version.o \
-	../alloc.o \
-	../globals.o \
-	../misc.o \
-	../output.o \
-	../file_basic.o \
-	../hash.o \
-	../profile.o \
-	../strcache.o \
+	../src/mock.o \
+	../src/version.o \
+	../src/alloc.o \
+	../src/globals.o \
+	../src/misc.o \
+	../src/output.o \
+	../src/file_basic.o \
+	../src/hash.o \
+	../src/profile.o \
+	../src/strcache.o \
 	@LIBINTL@
 
 check_PROGRAMS = test_profile

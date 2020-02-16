@@ -17,10 +17,10 @@ along with GNU Make; see the file COPYING.  If not, write to
 the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 Boston, MA 02111-1307, USA.  */
 
-#include "../config.h"
-#include "../types.h"
-#include "../file_basic.h"
-#include "../profile.h"
+#include "../src/config.h"
+#include "../src/types.h"
+#include "../src/file_basic.h"
+#include "../src/profile.h"
 int main(int argc, const char * const* argv) {
   bool rc = init_callgrind(PACKAGE_TARNAME " " PACKAGE_VERSION, argv);
   init_hash_files();
