@@ -27,7 +27,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.  */
 #undef xstrdup
 
 void *
-xmalloc (unsigned int size)
+xmalloc (size_t size)
 {
   /* Make sure we don't allocate 0, for pre-ISO implementations.  */
   void *result = malloc (size ? size : 1);
@@ -38,7 +38,7 @@ xmalloc (unsigned int size)
 
 
 void *
-xcalloc (unsigned int size)
+xcalloc (size_t size)
 {
   /* Make sure we don't allocate 0, for pre-ISO implementations.  */
   void *result = calloc (size ? size : 1, 1);
@@ -49,7 +49,7 @@ xcalloc (unsigned int size)
 
 
 void *
-xrealloc (void *ptr, unsigned int size)
+xrealloc (void *ptr, size_t size)
 {
   void *result;
 
@@ -87,7 +87,7 @@ xstrdup (const char *ptr)
 #endif  /* HAVE_DMALLOC_H */
 
 char *
-xstrndup (const char *str, unsigned int length)
+xstrndup (const char *str, size_t length)
 {
   char *result;
 

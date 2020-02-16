@@ -505,12 +505,12 @@ void die (int) NORETURN;
 void pfatal_with_name (const char *) NORETURN;
 void perror_with_name (const char *, const char *);
 #define xstrlen(_s) ((_s)==NULL ? 0 : strlen (_s))
-//void *xmalloc (size_t);
-//void *xcalloc (size_t);
-//void *xrealloc (void *, size_t);
-//char *xstrdup (const char *);
-//char *xstrndup (const char *, size_t);
-//char *find_next_token (const char **, size_t *);
+void *xmalloc (size_t);
+void *xcalloc (size_t);
+void *xrealloc (void *, size_t);
+char *xstrdup (const char *);
+char *xstrndup (const char *, size_t);
+char *find_next_token (const char **, size_t *);
 char *next_token (const char *);
 char *end_of_token (const char *);
 void collapse_continuations (char *);
