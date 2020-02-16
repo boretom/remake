@@ -158,9 +158,9 @@ static struct stringlist *verbosity_opts;
 int keep_going_flag;
 static const int default_keep_going_flag = 0;
 
-+/*! Nonzero gives a list of explicit target names that have commands
-+   AND comments associated with them and exits. Set by option --task-comments
-+ */
+/*! Nonzero gives a list of explicit target names that have commands
+   AND comments associated with them and exits. Set by option --task-comments
+ */
 
 int show_task_comments_flag = 0;
 

@@ -503,12 +503,12 @@ void die (int) NORETURN;
 void pfatal_with_name (const char *) NORETURN;
 void perror_with_name (const char *, const char *);
 #define xstrlen(_s) ((_s)==NULL ? 0 : strlen (_s))
-void *xmalloc (size_t);
-void *xcalloc (size_t);
-void *xrealloc (void *, size_t);
-char *xstrdup (const char *);
-char *xstrndup (const char *, size_t);
-char *find_next_token (const char **, size_t *);
+//void *xmalloc (size_t);
+//void *xcalloc (size_t);
+//void *xrealloc (void *, size_t);
+//char *xstrdup (const char *);
+//char *xstrndup (const char *, size_t);
+//char *find_next_token (const char **, size_t *);
 char *next_token (const char *);
 char *end_of_token (const char *);
 void collapse_continuations (char *);
@@ -561,7 +561,7 @@ void build_vpath_lists (void);
 void construct_vpath_list (char *pattern, char *dirpath);
 const char *vpath_search (const char *file, FILE_TIMESTAMP *mtime_ptr,
                           unsigned int* vpath_index, unsigned int* path_index);
-int gpath_search (const char *file, size_t len);
+//int gpath_search (const char *file, size_t len);
 
 void construct_include_path (const char **arg_dirs);
 

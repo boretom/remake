@@ -16,7 +16,6 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([GNU make],[4.3],[bug-make@gnu.org])
 AC_INIT([remake],[4.3+dbg-1.4],[https://github.com/rocky/remake/issues])
 
 AC_PREREQ([2.69])
@@ -35,7 +34,8 @@ AC_CONFIG_LIBOBJ_DIR([lib])
 # Automake 1.15 and gnulib don't get along: gnulib has some strange error
 # in the way it handles getloadavg.c which causes make distcheck to fail.
 # http://lists.gnu.org/archive/html/bug-gnulib/2018-06/msg00024.html
-AM_INIT_AUTOMAKE([1.16.1 foreign -Werror -Wall])
+AM_INIT_AUTOMAKE([subdir-objects 1.14 silent-rules foreign -Wall])
+AM_MAINTAINER_MODE
 
 # Checks for programs.
 AC_USE_SYSTEM_EXTENSIONS
@@ -56,6 +56,9 @@ AC_CHECK_PROG([PERL], [perl], [perl], [perl])
 # Ruby 1.9 and RSPec are needed for the debugger test suite (only)
 AC_CHECK_PROG(RUBY, ruby, ruby, none)
 AC_CHECK_PROG(RSPEC, rspec, rspec, none)
+
+# Needed for w32/Makefile.am
+AM_PROG_AR
 
 # Specialized system macros
 AC_CANONICAL_HOST
@@ -169,6 +172,9 @@ AC_FUNC_SETVBUF_REVERSED
 # It doesn't hurt much to use our own if we can't find it so I don't
 # make the effort here.
 AC_CHECK_FUNCS([strcasecmp strncasecmp strcmpi strncmpi stricmp strnicmp])
+
+# Tell automake about this, so it can build the right .c files.
+AM_CONDITIONAL([USE_LOCAL_GLOB], [test "$make_cv_sys_gnu_glob" = no])+
 
 # strcoll() is used by the GNU glob library
 AC_FUNC_STRCOLL

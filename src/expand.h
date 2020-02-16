@@ -41,12 +41,12 @@ extern char *allocated_variable_expand_for_file(const char *psz_line,
    without clobbering `variable_buffer' or the current
    variable-expansion that is in progress.  */
 
-extern char *expand_argument(const char *str, const char *end);
+//extern char *expand_argument(const char *str, const char *end);
 
 /*! Install a new variable_buffer context, returning the current one for
    safe-keeping.  */
 
-extern void install_variable_buffer (char **pp_buf, unsigned int *pi_len);
+//extern void install_variable_buffer (char **pp_buf, unsigned int *pi_len);
 
 /*! Restore a previously-saved variable_buffer setting (free the current one).
  */
@@ -54,7 +54,7 @@ extern void install_variable_buffer (char **pp_buf, unsigned int *pi_len);
 #define recursively_expand(v)   recursively_expand_for_file (v, NULL)
 
 /*! Recursively expand V.  The returned string is malloc'd.  */
-extern char *recursively_expand_for_file(variable_t *v, file_t *file);
+//extern char *recursively_expand_for_file(variable_t *v, file_t *file);
 
 /*! Subroutine of variable_expand and friends:
    The text to add is LENGTH chars starting at STRING to the variable_buffer.
@@ -63,7 +63,7 @@ extern char *recursively_expand_for_file(variable_t *v, file_t *file);
    each call to variable_buffer_output should be the first argument to
    the following call.  */
 
-extern void restore_variable_buffer(char *p_buf, unsigned int len);
+//extern void restore_variable_buffer(char *p_buf, unsigned int len);
 
 /** Expand PSZ_LINE. Expansion uses P_FILE_SET if it is not NULL. */
 extern char *variable_expand_set (char *psz_line, 

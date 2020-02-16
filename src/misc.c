@@ -776,7 +776,7 @@ initialize_stopchar_map (void)
   stopchar_map[(int)';'] = MAP_SEMI;
   stopchar_map[(int)'='] = MAP_EQUALS;
   stopchar_map[(int)':'] = MAP_COLON;
-  stopchar_map[(int)'%'] = MAP_PERCENT;
+  stopchar_map[(int)'%'] = MAP_VARSEP;
   stopchar_map[(int)'|'] = MAP_PIPE;
   stopchar_map[(int)'.'] = MAP_DOT | MAP_USERFUNC;
   stopchar_map[(int)','] = MAP_COMMA;

@@ -139,11 +139,11 @@ extern int errno;
 
 #ifdef  PATH_MAX
 # define GET_PATH_MAX   PATH_MAX
-# define PATH_VAR(var)  char var[PATH_MAX]
+//# define PATH_VAR(var)  char var[PATH_MAX]
 #else
 # define NEED_GET_PATH_MAX 1
 # define GET_PATH_MAX   (get_path_max ())
-# define PATH_VAR(var)  char *var = alloca (GET_PATH_MAX)
+// # define PATH_VAR(var)  char *var = alloca (GET_PATH_MAX)
 unsigned int get_path_max (void);
 #endif
 
@@ -198,7 +198,7 @@ unsigned int get_path_max (void);
 #  define __printf__ printf
 # endif
 #endif
-#define UNUSED  __attribute__ ((unused))
+// #define UNUSED  __attribute__ ((unused))
 
 #if defined (STDC_HEADERS) || defined (__GNU_LIBRARY__)
 # include <stdlib.h>
@@ -353,7 +353,7 @@ void *xcalloc (unsigned int);
 void *xrealloc (void *, unsigned int);
 char *xstrdup (const char *);
 char *xstrndup (const char *, unsigned int);
-char *find_next_token (const char **, unsigned int *);
+//char *find_next_token (const char **, unsigned int *);
 char *next_token (const char *);
 char *end_of_token (const char *);
 void collapse_continuations (char *);
@@ -389,7 +389,7 @@ void build_vpath_lists (void);
 void construct_vpath_list (char *pattern, char *dirpath);
 const char *vpath_search (const char *file, FILE_TIMESTAMP *mtime_ptr,
                           unsigned int* vpath_index, unsigned int* path_index);
-int gpath_search (const char *file, unsigned int len);
+int gpath_search (const char *file, size_t len);
 
 /*! Construct the list of include directories
    from the arguments and the default list.

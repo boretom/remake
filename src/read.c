@@ -406,7 +406,7 @@ eval_makefile (const char *filename, unsigned short flags)
   /* Add this makefile to the list. */
   do_variable_definition (&ebuf.floc, "MAKEFILE_LIST", filename, o_file,
                           f_append_value, 0);
-jj
+
   if (b_debugger_preread && i_debugger_stepping && !in_debugger) {
       enter_debugger (NULL, NULL, 0, DEBUG_READ_HIT);
   }
@@ -601,20 +601,20 @@ eval (struct ebuffer *ebuf, int set_default)
         {                                                                     \
 	         /* Have we seen two descriptions since this target or one? */      \
 	         char *description = target_description_lineno > tgts_started	?     \
-	          prev_target_description : target_description;		      \
-           fi.lineno = tgts_started;                                           \
-           fi.offset = 0;                                                      \
-           record_files (filenames, also_make_targets, pattern,                \
+	          prev_target_description : target_description;		                  \
+           fi.lineno = tgts_started;                                          \
+           fi.offset = 0;                                                     \
+           record_files (filenames, also_make_targets, pattern,               \
                         pattern_percent, depstr,                              \
                         cmds_started, commands, commands_idx, two_colon,      \
-                        description, prefix, &fi);			      \
+                        description, prefix, &fi);			                      \
           /* Don't use the target_description values more than once. */       \
-          if (target_description_lineno > tgts_started)		      	      \
-            prev_target_description = NULL;				      \
-          else								      \
-            target_description = NULL;				      \
-          filenames = 0;						      \
-        }
+          if (target_description_lineno > tgts_started)		      	            \
+            prev_target_description = NULL;				                            \
+          else								                                                \
+            target_description = NULL;				                                \
+          filenames = 0;						                                          \
+        }                                                                     \
       commands_idx = 0;                                                       \
       no_targets = 0;                                                         \
       pattern = 0;                                                            \
@@ -1437,6 +1437,7 @@ remove_comments (char *line, char **target_description,
     }
     /* Cut off the line at the #.  */
     *comment = '\0';
+  }
 }
 
 /* Execute a 'undefine' directive.
