@@ -34,7 +34,13 @@ AC_CONFIG_LIBOBJ_DIR([lib])
 # Automake 1.15 and gnulib don't get along: gnulib has some strange error
 # in the way it handles getloadavg.c which causes make distcheck to fail.
 # http://lists.gnu.org/archive/html/bug-gnulib/2018-06/msg00024.html
-AM_INIT_AUTOMAKE([subdir-objects 1.14 silent-rules foreign -Wall])
+#
+# We have to enable "info-in-builddir" because future versions of automake
+# would place generated .info files in srcdir instead of builddir. Using that
+# option everything stays as it is.
+# https://www.gnu.org/software/automake/manual/html_node/List-of-Automake-options.html
+AM_INIT_AUTOMAKE([subdir-objects 1.14 silent-rules foreign -Wall
+                  info-in-builddir])
 AM_MAINTAINER_MODE
 
 # Checks for programs.

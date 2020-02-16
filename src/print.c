@@ -185,7 +185,11 @@ char *
 strerror (int errnum)
 {
   extern int errno;
+#ifdef __APPLE__
   extern const int sys_nerr;
+#else
+  extern  int sys_nerr;
+#endif // __APPLE__
 #ifndef __DECC
   extern const char *const sys_errlist[];
 #endif
