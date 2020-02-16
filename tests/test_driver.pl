@@ -52,8 +52,7 @@ $tests_passed = 0;
 $test_passed = 1;
 
 # Timeout in seconds.  If the test takes longer than this we'll fail it.
-$test_timeout = 5;
-$test_timeout = 10 if $^O eq 'VMS';
+$test_timeout = 10;
 
 # Path to Perl
 $perl_name = $^X;
@@ -91,18 +90,6 @@ $perl_name =~ tr,\\,/,;
 %extraENV = ();
 
 sub vms_get_process_logicals {
-  # Sorry for the long note here, but to keep this test running on
-  # VMS, it is needed to be understood.
-  #
-  # Perl on VMS by default maps the %ENV array to the system wide logical
-  # name table.
-  #
-  # This is a very large dynamically changing table.
-  # On Linux, this would be the equivalent of a table that contained
-  # every mount point, temporary pipe, and symbolic link on every
-  # file system.  You normally do not have permission to clear or replace it,
-  # and if you did, the results would be catastrophic.
-  #
   # On VMS, added/changed %ENV items show up in the process logical
   # name table.  So to track changes, a copy of it needs to be captured.
 
@@ -118,12 +105,7 @@ sub vms_get_process_logicals {
 }
 
 # %origENV is the caller's original environment
-if ($^O ne 'VMS') {
-  %origENV = %ENV;
-} else {
-  my $proc_env = vms_get_process_logicals;
-  %origENV = %{$proc_env};
-}
+%origENV = %ENV;
 
 sub resetENV
 {
@@ -131,25 +113,11 @@ sub resetENV
   # through Perl 5.004.  It was fixed in Perl 5.004_01, but we don't
   # want to require that here, so just delete each one individually.
 
-  if ($^O ne 'VMS') {
-    foreach $v (keys %ENV) {
-      delete $ENV{$v};
-    }
-
-    %ENV = %makeENV;
-  } else {
-    my $proc_env = vms_get_process_logicals();
-    my %delta = %{$proc_env};
-    foreach my $v (keys %delta) {
-      if (exists $origENV{$v}) {
-        if ($origENV{$v} ne $delta{$v}) {
-          $ENV{$v} = $origENV{$v};
-        }
-      } else {
-        delete $ENV{$v};
-      }
-    }
+  foreach $v (keys %ENV) {
+    delete $ENV{$v};
   }
+
+  %ENV = %makeENV;
 
   foreach $v (keys %extraENV) {
     $ENV{$v} = $extraENV{$v};
@@ -181,9 +149,14 @@ sub toplevel
 
   $makeENV{LC_ALL} = 'C';
 
+  # HACK. On Debian, ar is now compiled with determinism, which makes
+  # make tests fail. Pass in the U modifier to revert that behaviour change
+  # If ar has not been changed, this should be a no-op.
+  $makeENV{ARFLAGS} = 'rvU';
+
   # Replace the environment with the new one
   #
-  %origENV = %ENV unless $^O eq 'VMS';
+  %origENV = %ENV;
 
   resetENV();
 
@@ -978,7 +951,7 @@ sub detach_default_output
   @OUTSTACK or error("default output stack has flown under!\n", 1);
 
   close(STDOUT);
-  close(STDERR) unless $^O eq 'VMS';
+  close(STDERR);
 
 
   open (STDOUT, '>&', pop @OUTSTACK) or error("ddo: $! duping STDOUT\n", 1);
@@ -1085,7 +1058,6 @@ sub run_command
   print "\nrun_command: @_\n" if $debug;
   my $code = _run_command(@_);
   print "run_command returned $code.\n" if $debug;
-  print "vms status = ${^CHILD_ERROR_NATIVE}\n" if $debug and $^O eq 'VMS';
   return $code;
 }
 
@@ -1107,7 +1079,6 @@ sub run_command_with_output
   $err and die $err;
 
   print "run_command_with_output returned $code.\n" if $debug;
-  print "vms status = ${^CHILD_ERROR_NATIVE}\n" if $debug and $^O eq 'VMS';
   return $code;
 }
 

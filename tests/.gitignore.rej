@@ -1,0 +1,7 @@
+diff a/tests/.gitignore b/tests/.gitignore	(rejected hunks)
+@@ -1,4 +1,5 @@
+ /*~
++/config-flags.pm
+ /test-file
+ /test.*
+ /work

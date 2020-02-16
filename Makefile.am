@@ -16,17 +16,69 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AUTOMAKE_OPTIONS = dist-lzip silent-rules std-options subdir-objects nostdinc
+AUTOMAKE_OPTIONS = 1.8 dist-lzip silent-rules std-options subdir-objects nostdinc
 ACLOCAL_AMFLAGS = -I m4
+
+transform = s,make,@MAKE_NAME@,
 
 MAKE_HOST =	@MAKE_HOST@
 
-SUBDIRS =	lib po doc
+SUBDIRS =	lib po doc unittest
 
 bin_PROGRAMS =	make
 include_HEADERS = src/gnumake.h
 
 man_MANS =	doc/make.1
+
+DEBUGGER_SRC = 	\
+		debugger/break.c \
+		debugger/cmd.c 	\
+		debugger/fns.c 	\
+		debugger/file2line.c 	\
+		debugger/msg.c 	\
+		debugger/stack.c
+
+DEBUGGER_H = \
+		debugger/break.h 		\
+		debugger/cmd.h 			\
+		debugger/fns.h 			\
+		debugger/msg.h 			\
+		debugger/command/break.h 	\
+		debugger/command/chdir.h  	\
+		debugger/command/comment.h 	\
+		debugger/command/continue.h	\
+		debugger/command/delete.h 	\
+		debugger/command/down.h 	\
+		debugger/command/edit.h 	\
+		debugger/command/eval.h 	\
+		debugger/command/expand.h	\
+		debugger/command/finish.h	\
+		debugger/command/frame.h	\
+		debugger/command/help.h		\
+		debugger/command/info.h		\
+		debugger/command/list.h		\
+		debugger/command/next.h		\
+		debugger/command/print.h	\
+		debugger/command/pwd.h		\
+		debugger/command/quit.h		\
+		debugger/command/run.h		\
+		debugger/command/set.h		\
+		debugger/command/setq.h		\
+		debugger/command/setqx.h	\
+		debugger/command/shell.h	\
+		debugger/command/show.h		\
+		debugger/command/skip.h		\
+		debugger/command/source.h	\
+		debugger/command/step.h		\
+		debugger/command/target.h	\
+		debugger/command/up.h		\
+		debugger/command/where.h	\
+		debugger/command/write.h	\
+		debugger/file2line.h 	        \
+		debugger/fns.h 			\
+		debugger/info.h			\
+		debugger/stack.h		\
+		debugger/subcmd.h
 
 make_SRCS =	src/ar.c src/arscan.c src/commands.c src/commands.h \
 		src/debug.h src/default.c src/dep.h src/dir.c src/expand.c \
@@ -36,7 +88,8 @@ make_SRCS =	src/ar.c src/arscan.c src/commands.c src/commands.h \
 		src/load.c src/loadapi.c src/main.c src/makeint.h src/misc.c \
 		src/os.h src/output.c src/output.h src/read.c src/remake.c \
 		src/rule.c src/rule.h src/signame.c src/strcache.c \
-		src/variable.c src/variable.h src/version.c src/vpath.c
+		src/variable.c src/variable.h src/version.c src/vpath.c \
+		$(DEBUGGER_SRC)
 
 w32_SRCS =	src/w32/pathstuff.c src/w32/w32os.c src/w32/compat/dirent.c \
 		src/w32/compat/posixfcn.c src/w32/include/dirent.h \
@@ -180,3 +233,13 @@ check-regression: tests/config-flags.pm
 README:
 
 @MAINT_MAKEFILE@
+
+# FIXME fix up to use the git2cl in MAINT_MAKEFILE
+GIT2CL = ./git2cl
+if MAINTAINER_MODE
+
+#: create ChangeLog for distirbution from 'git log'
+ChangeLog:
+	git log --pretty --numstat --summary | $(GIT2CL) > $@
+
+endif
