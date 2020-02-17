@@ -33,6 +33,7 @@
 use Config;
 use Cwd;
 use File::Spec;
+use File::Basename 'dirname';
 
 # The number of test categories we've run
 $categories_run = 0;
@@ -190,23 +191,6 @@ sub toplevel
 
   &print_banner;
 
-  if ($osname eq 'VMS' && $cwdslash eq "") {
-    # Porting this script to VMS revealed a small bug in opendir() not
-    # handling search lists correctly when the directory only exists in
-    # one of the logical_devices.  Need to find the first directory in
-    # the search list, as that is where things will be written to.
-    my @dirs = split('/', $cwdpath);
-
-    my $logical_device = $ENV{$dirs[1]};
-    if ($logical_device =~ /([A-Za-z0-9_]+):(:?.+:)+/) {
-      # A search list was found.  Grab the first logical device
-      # and use it instead of the search list.
-      $dirs[1]=$1;
-      my $lcl_pwd = join('/', @dirs);
-      $workpath = $lcl_pwd . '/' . $workdir
-    }
-  }
-
   if (-d $workpath) {
     print "Clearing $workpath...\n";
     &remove_directory_tree("$workpath/")
@@ -325,13 +309,6 @@ sub get_osname
   # that next time.
   else {
     $port_type = 'UNIX';
-  }
-
-  if ($osname eq 'VMS')
-  {
-    $vos = 0;
-    $pathsep = "/";
-    return;
   }
 
   # Find a path to Perl
@@ -504,6 +481,11 @@ sub run_all_tests
     $perl_testname = "$scriptpath$pathsep$testname";
     $testname =~ s/(\.pl|\.perl)$//;
     $testpath = "$workpath$pathsep$testname";
+
+    chomp($fulltestdir = `pwd`);
+    $testcat = dirname($testname);
+    $fullworkdir = "$fulltestdir$pathsep$workpath$pathsep$testcat";
+
     # Leave enough space in the extensions to append a number, even
     # though it needs to fit into 8+3 limits.
     if ($short_filenames) {
@@ -519,7 +501,6 @@ sub run_all_tests
       $runext = 'run';
       $extext = '.';
     }
-    $extext = '_' if $^O eq 'VMS';
     $log_filename = "$testpath.$logext";
     $diff_filename = "$testpath.$diffext";
     $base_filename = "$testpath.$baseext";
@@ -746,121 +727,6 @@ sub compare_output
       $slurp_mod =~ s,\r\n,\n,gs;
 
       $answer_matched = ($slurp_mod eq $answer_mod);
-      if ($^O eq 'VMS') {
-
-        # VMS has extra blank lines in output sometimes.
-        # Ticket #41760
-        if (!$answer_matched) {
-          $slurp_mod =~ s/\n\n+/\n/gm;
-          $slurp_mod =~ s/\A\n+//g;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS adding a "Waiting for unfinished jobs..."
-        # Remove it for now to see what else is going on.
-        if (!$answer_matched) {
-          $slurp_mod =~ s/^.+\*\*\* Waiting for unfinished jobs.+$//m;
-          $slurp_mod =~ s/\n\n/\n/gm;
-          $slurp_mod =~ s/^\n+//gm;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS wants target device to exist or generates an error,
-        # Some test tagets look like VMS devices and trip this.
-        if (!$answer_matched) {
-          $slurp_mod =~ s/^.+\: no such device or address.*$//gim;
-          $slurp_mod =~ s/\n\n/\n/gm;
-          $slurp_mod =~ s/^\n+//gm;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS error message has a different case
-        if (!$answer_matched) {
-          $slurp_mod =~ s/no such file /No such file /gm;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS is putting comas instead of spaces in output
-        if (!$answer_matched) {
-          $slurp_mod =~ s/,/ /gm;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS Is sometimes adding extra leading spaces to output?
-        if (!$answer_matched) {
-           my $slurp_mod = $slurp_mod;
-           $slurp_mod =~ s/^ +//gm;
-           $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS port not handling POSIX encoded child status
-        # Translate error case it for now.
-        if (!$answer_matched) {
-          $slurp_mod =~ s/0x1035a00a/1/gim;
-          $answer_matched = 1 if $slurp_mod =~ /\Q$answer_mod\E/i;
-
-        }
-        if (!$answer_matched) {
-          $slurp_mod =~ s/0x1035a012/2/gim;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # Tests are using a UNIX null command, temp hack
-        # until this can be handled by the VMS port.
-        # ticket # 41761
-        if (!$answer_matched) {
-          $slurp_mod =~ s/^.+DCL-W-NOCOMD.*$//gim;
-          $slurp_mod =~ s/\n\n+/\n/gm;
-          $slurp_mod =~ s/^\n+//gm;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-        # Tests are using exit 0;
-        # this generates a warning that should stop the make, but does not
-        if (!$answer_matched) {
-          $slurp_mod =~ s/^.+NONAME-W-NOMSG.*$//gim;
-          $slurp_mod =~ s/\n\n+/\n/gm;
-          $slurp_mod =~ s/^\n+//gm;
-          $answer_matched = ($slurp_mod eq $answer_mod);
-        }
-
-        # VMS is sometimes adding single quotes to output?
-        if (!$answer_matched) {
-          my $noq_slurp_mod = $slurp_mod;
-          $noq_slurp_mod =~ s/\'//gm;
-          $answer_matched = ($noq_slurp_mod eq $answer_mod);
-
-          # And missing an extra space in output
-          if (!$answer_matched) {
-            $noq_answer_mod = $answer_mod;
-            $noq_answer_mod =~ s/\h\h+/ /gm;
-            $answer_matched = ($noq_slurp_mod eq $noq_answer_mod);
-          }
-
-          # VMS adding ; to end of some lines.
-          if (!$answer_matched) {
-            $noq_slurp_mod =~ s/;\n/\n/gm;
-            $answer_matched = ($noq_slurp_mod eq $noq_answer_mod);
-          }
-
-          # VMS adding trailing space to end of some quoted lines.
-          if (!$answer_matched) {
-            $noq_slurp_mod =~ s/\h+\n/\n/gm;
-            $answer_matched = ($noq_slurp_mod eq $noq_answer_mod);
-          }
-
-          # And VMS missing leading blank line
-          if (!$answer_matched) {
-            $noq_answer_mod =~ s/\A\n//g;
-            $answer_matched = ($noq_slurp_mod eq $noq_answer_mod);
-          }
-
-          # Unix double quotes showing up as single quotes on VMS.
-          if (!$answer_matched) {
-            $noq_answer_mod =~ s/\"//g;
-            $answer_matched = ($noq_slurp_mod eq $noq_answer_mod);
-          }
-        }
-      }
 
       # If it still doesn't match, see if the answer might be a regex.
       if (!$answer_matched && $answer =~ m,^/(.+)/$,) {
@@ -892,6 +758,68 @@ sub compare_output
     &run_command_with_output(&get_difffile,$command);
   }
 
+  return 0;
+}
+
+sub compare_output_string
+{
+  my($answer,$slurp,$logfile) = @_;
+  my($answer_matched) = (0);
+
+  print "Comparing Output ........ " if $debug;
+
+  $slurp = subst_make_string($slurp);
+  $answer = subst_make_string($answer);
+
+  # For make, get rid of any time skew error before comparing--too bad this
+  # has to go into the "generic" driver code :-/
+  $slurp =~ s/^.*modification time .*in the future.*\n//gm;
+  $slurp =~ s/^.*Clock skew detected.*\n//gm;
+
+  ++$tests_run;
+
+  if ($slurp eq $answer) {
+    $answer_matched = 1;
+  } else {
+    # See if it is a slash or CRLF problem
+    my ($answer_mod) = $answer;
+
+    $answer_mod =~ tr,\\,/,;
+    $answer_mod =~ s,\r\n,\n,gs;
+
+    $slurp =~ tr,\\,/,;
+    $slurp =~ s,\r\n,\n,gs;
+
+    $answer_matched = ($slurp eq $answer_mod);
+  }
+
+  if ($answer_matched && $test_passed)
+  {
+    print "ok\n" if $debug;
+    ++$tests_passed;
+    return 1;
+  }
+
+  if (! $answer_matched) {
+      if ($debug) {
+	  print "DIFFERENT OUTPUT\n";
+	  print "+++1:\n$answer\n";
+	  print "+++2:\n$slurp\n";
+      }
+
+    &create_file (&get_basefile, $answer);
+
+    print "\nCreating Difference File ...\n" if $debug;
+
+    # Create the difference file
+
+    open(LOGFILE, ">$logfile") && print(LOGFILE $slurp) && close(LOGFILE);
+
+    local($command) = "diff -c " . &get_basefile . " " . $logfile;
+    &run_command_with_output(&get_difffile,$command);
+  }
+
+  $suite_passed = 0;
   return 0;
 }
 
@@ -961,33 +889,8 @@ sub detach_default_output
 sub _run_with_timeout
 {
   my $code;
-  if ($^O eq 'VMS') {
-    #local $SIG{ALRM} = sub {
-    #    my $e = $ERRSTACK[0];
-    #    print $e "\nTest timed out after $test_timeout seconds\n";
-    #    die "timeout\n";
-    #};
-    #alarm $test_timeout;
-    system(@_);
-    #alarm 0;
-    my $severity = ${^CHILD_ERROR_NATIVE} & 7;
-    $code = 0;
-    if (($severity & 1) == 0) {
-      $code = 512;
-    }
 
-    # Get the vms status.
-    my $vms_code = ${^CHILD_ERROR_NATIVE};
-
-    # Remove the print status bit
-    $vms_code &= ~0x10000000;
-
-    # Posix code translation.
-    if (($vms_code & 0xFFFFF000) == 0x35a000) {
-      $code = (($vms_code & 0xFFF) >> 3) * 256;
-    }
-
-  } elsif ($port_type eq 'W32') {
+  if ($port_type eq 'W32') {
     my $pid = system(1, @_);
     $pid > 0 or die "Cannot execute $_[0]\n";
     local $SIG{ALRM} = sub {

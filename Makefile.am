@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AUTOMAKE_OPTIONS = 1.8 dist-lzip silent-rules std-options subdir-objects nostdinc
+AUTOMAKE_OPTIONS = 1.8 dist-lzip silent-rules std-options subdir-objects nostdinc check-news
 ACLOCAL_AMFLAGS = -I m4
 
 transform = s,make,@MAKE_NAME@,
@@ -157,13 +157,13 @@ test_FILES =	tests/run_make_tests tests/run_make_tests.bat \
 # test/scripts are added via dist-hook below.
 
 EXTRA_DIST =	ChangeLog README build.sh build.cfg.in $(man_MANS) \
-		README.customs README.OS2 \
-		README.Amiga SCOPTIONS src/config.ami \
+		README.customs \
+		SCOPTIONS src/config.ami \
 		README.DOS builddos.bat src/configh.dos \
 		README.W32 build_w32.bat src/config.h.W32 \
-		README.VMS makefile.com src/config.h-vms src/vmsjobs.c \
-		vms_export_symbol_test.com \
 		src/gmk-default.scm src/gmk-default.h \
+        debugger/Makefile \
+		NEWS.remake README.remake REMAKE.todo Rakefile \
 		$(mk_FILES) $(m4_FILES) $(test_FILES)
 
 # --------------- Generate the Guile default module content

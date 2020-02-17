@@ -23,13 +23,20 @@ run_make_test(undef, " -i two",
 
 # Test that error line offset works
 
+$answer = "hi
+there
+work/features/errors.mk:4: *** [all] Error 1
+
+#0  all at $fullworkdir/errors.mk:2
+";
+
 run_make_test(qq!
 all:
 \t\@echo hi
 \t\@echo there
 \t\@exit 1
 !,
-              '', "hi\nthere\n#MAKE#: *** [#MAKEFILE#:5: all] Error 1", 512);
+              '', $answer, 512);
 
 # TEST #3
 # -------
