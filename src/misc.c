@@ -770,16 +770,18 @@ extern void
 initialize_stopchar_map (void)
 {
   int i;
-
   stopchar_map[(int)'\0'] = MAP_NUL;
   stopchar_map[(int)'#'] = MAP_COMMENT;
   stopchar_map[(int)';'] = MAP_SEMI;
   stopchar_map[(int)'='] = MAP_EQUALS;
   stopchar_map[(int)':'] = MAP_COLON;
-  stopchar_map[(int)'%'] = MAP_VARSEP;
   stopchar_map[(int)'|'] = MAP_PIPE;
   stopchar_map[(int)'.'] = MAP_DOT | MAP_USERFUNC;
   stopchar_map[(int)','] = MAP_COMMA;
+  stopchar_map[(int)'('] = MAP_VARSEP;
+  stopchar_map[(int)'{'] = MAP_VARSEP;
+  stopchar_map[(int)'}'] = MAP_VARSEP;
+  stopchar_map[(int)')'] = MAP_VARSEP;
   stopchar_map[(int)'$'] = MAP_VARIABLE;
 
   stopchar_map[(int)'-'] = MAP_USERFUNC;
@@ -789,6 +791,7 @@ initialize_stopchar_map (void)
   stopchar_map[(int)'\t'] = MAP_BLANK;
 
   stopchar_map[(int)'/'] = MAP_DIRSEP;
+
 #if defined(HAVE_DOS_PATHS)
   stopchar_map[(int)'\\'] = MAP_DIRSEP;
 #endif
