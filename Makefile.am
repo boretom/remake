@@ -101,8 +101,6 @@ w32_SRCS =	src/w32/pathstuff.c src/w32/w32os.c src/w32/compat/dirent.c \
 		src/w32/subproc/misc.c src/w32/subproc/proc.h \
 		src/w32/subproc/sub_proc.c src/w32/subproc/w32err.c
 
-amiga_SRCS =   src/amiga.c src/amiga.h
-
 glob_SRCS =	lib/fnmatch.c lib/fnmatch.h lib/glob.c lib/glob.h
 
 alloca_SRCS =	lib/alloca.c
@@ -110,7 +108,6 @@ alloca_SRCS =	lib/alloca.c
 loadavg_SRCS =	lib/getloadavg.c
 
 make_SOURCES =	$(make_SRCS)
-EXTRA_make_SOURCES = $(amiga_SRCS)
 
 make_LDADD =	$(LIBOBJS) $(GUILE_LIBS) lib/libgnu.a $(GETLOADAVG_LIBS) \
 		@LIBINTL@
