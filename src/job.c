@@ -1193,7 +1193,7 @@ start_job_command (child_t *child,
   {
     bool print_it =
 	(just_print_flag
-	 || (!(flags & COMMANDS_SILENT) && !silent_flag)
+	 || (!(flags & COMMANDS_SILENT) && !run_silent)
 	 || (db_level & DB_SHELL));
 
     if (print_it) {

@@ -22,7 +22,7 @@ all: ; \@$script
 };
 
 my $out = `/bin/sh $flags '$script' 2>&1`;
-my $answer = qq{#MAKEFILE#:4: *** [all] Error $err
+my $answer = qq{#MAKEFILE#:4: *** [all] error $err
 
 #0 all at #MAKEFILE#:4
 };
@@ -34,7 +34,7 @@ $slurp =~ s:^#0  all at .*work/targets/:#0 all at work/targets/:gm;
 &compare_output_string($answer, $slurp, $logfile);
 
 # Test the default value of various POSIX-specific variables
-my %POSIX = (AR => 'ar', ARFLAGS => '-rvU',
+my %POSIX = (AR => 'ar', ARFLAGS => 'rvU',
              YACC => 'yacc', YFLAGS => '',
              LEX => 'lex', LFLAGS => '',
              LDFLAGS => '',

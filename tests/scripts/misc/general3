@@ -314,7 +314,7 @@ hi
 foo     bar');
 
 run_make_test('x:;@-exit 1', '',
-"work/misc/general3.mk.10:1: [x] Error 1 (ignored)
+"work/misc/general3.mk.10:1: [x] error 1 (ignored)
 
 #0  x at $fullworkdir/general3.mk.10:1
 ");

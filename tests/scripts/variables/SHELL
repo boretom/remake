@@ -109,7 +109,7 @@ all: ; \@$script
 !,
               '', "+ true
 + false
-#MAKEFILE#:3: *** [all] Error $err
+#MAKEFILE#:3: *** [all] error $err
 
 #0  all at $fullworkdir/SHELL.mk.7:3", 512);
 

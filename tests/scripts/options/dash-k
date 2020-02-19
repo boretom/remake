@@ -90,7 +90,7 @@ EOF
 close(MAKEFILE);
 
 my $answer = "exit 1
-$makefile2:9: *** [foo.o] Error 1
+$makefile2:9: *** [foo.o] error 1
 
 #0  foo.o at work/options/dash-k.mk.1:9
 #1  lib at work/options/dash-k.mk.1:7
