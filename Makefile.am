@@ -23,7 +23,7 @@ transform = s,make,@MAKE_NAME@,
 
 MAKE_HOST =	@MAKE_HOST@
 
-SUBDIRS =	lib po doc unittest
+SUBDIRS =	lib po doc glob unittest
 
 bin_PROGRAMS =	make
 include_HEADERS = src/gnuremake.h
@@ -88,7 +88,7 @@ make_SRCS =	\
 		src/file.c src/filedef.h src/function.c src/getopt.c \
 		src/getopt.h src/getopt1.c src/gettext.h src/guile.c \
 		src/hash.c src/hash.h src/implicit.c src/job.c src/job.h \
-		src/load.c src/loadapi.c src/main.c src/makeint.h src/misc.c \
+		src/load.c src/loadapi.c src/main.c src/misc.c \
 		src/os.h src/output.c src/output.h src/read.c src/remake.c \
 		src/rule.c src/rule.h src/signame.c src/strcache.c \
 		src/variable.c src/variable.h src/version.c src/vpath.c \
@@ -101,10 +101,7 @@ w32_SRCS =	src/w32/pathstuff.c src/w32/w32os.c src/w32/compat/dirent.c \
 		src/w32/subproc/misc.c src/w32/subproc/proc.h \
 		src/w32/subproc/sub_proc.c src/w32/subproc/w32err.c
 
-vms_SRCS =	src/vms_exit.c src/vms_export_symbol.c src/vms_progname.c \
-		src/vmsdir.h src/vmsfunctions.c src/vmsify.c
-
-amiga_SRCS =	src/amiga.c src/amiga.h
+amiga_SRCS =   src/amiga.c src/amiga.h
 
 glob_SRCS =	lib/fnmatch.c lib/fnmatch.h lib/glob.c lib/glob.h
 
@@ -113,7 +110,7 @@ alloca_SRCS =	lib/alloca.c
 loadavg_SRCS =	lib/getloadavg.c
 
 make_SOURCES =	$(make_SRCS)
-EXTRA_make_SOURCES = $(amiga_SRCS) $(vms_SRCS)
+EXTRA_make_SOURCES = $(amiga_SRCS)
 
 make_LDADD =	$(LIBOBJS) $(GUILE_LIBS) lib/libgnu.a $(GETLOADAVG_LIBS) \
 		@LIBINTL@
@@ -143,7 +140,7 @@ endif
 
 # Extra stuff to include in the distribution.
 
-mk_FILES =	Basic.mk mk/msdosdjgpp.mk mk/Amiga.mk mk/VMS.mk mk/Windows32.mk
+mk_FILES =	Basic.mk mk/msdosdjgpp.mk mk/Amiga.mk mk/Windows32.mk
 # We don't need this, since the standard automake output will do.
 #mk/Posix.mk.in
 
@@ -161,8 +158,8 @@ EXTRA_DIST =	ChangeLog README build.sh build.cfg.in $(man_MANS) \
 		SCOPTIONS src/config.ami \
 		README.DOS builddos.bat src/configh.dos \
 		README.W32 build_w32.bat src/config.h.W32 \
+		src/debugger/Makefile \
 		src/gmk-default.scm src/gmk-default.h \
-        debugger/Makefile \
 		NEWS.remake README.remake REMAKE.todo Rakefile \
 		$(mk_FILES) $(m4_FILES) $(test_FILES)
 
@@ -243,7 +240,7 @@ README:
 GIT2CL = ./git2cl
 if MAINTAINER_MODE
 
-#: create ChangeLog for distirbution from 'git log'
+# create ChangeLog for distirbution from 'git log'
 ChangeLog:
 	git log --pretty --numstat --summary | $(GIT2CL) > $@
 

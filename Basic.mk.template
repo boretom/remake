@@ -31,13 +31,13 @@ all:
 src = src/
 lib = lib/
 
-make_SOURCES = $(src)ar.c $(src)arscan.c $(src)commands.c $(src)default.c $(src)dir.c $(src)expand.c $(src)file.c $(src)function.c $(src)getopt.c $(src)getopt1.c $(src)guile.c $(src)hash.c $(src)implicit.c $(src)job.c $(src)load.c $(src)loadapi.c $(src)main.c $(src)misc.c $(src)output.c $(src)read.c $(src)remake.c $(src)rule.c $(src)signame.c $(src)strcache.c $(src)variable.c $(src)version.c $(src)vpath.c
-glob_SOURCES = $(lib)fnmatch.c $(lib)glob.c
-loadavg_SOURCES = $(lib)getloadavg.c
-alloca_SOURCES = $(lib)alloca.c
-w32_SOURCES = $(src)w32/pathstuff.c $(src)w32/w32os.c $(src)w32/compat/dirent.c $(src)w32/compat/posixfcn.c $(src)w32/subproc/misc.c $(src)w32/subproc/sub_proc.c $(src)w32/subproc/w32err.c
-vms_SOURCES = $(src)vms_exit.c $(src)vms_export_symbol.c $(src)vms_progname.c $(src)vmsfunctions.c $(src)vmsify.c
-amiga_SOURCES = $(src)amiga.c
+make_SOURCES = %make_SOURCES%
+glob_SOURCES = %glob_SOURCES%
+loadavg_SOURCES = %loadavg_SOURCES%
+alloca_SOURCES = %alloca_SOURCES%
+w32_SOURCES = %w32_SOURCES%
+vms_SOURCES = %vms_SOURCES%
+amiga_SOURCES = %amiga_SOURCES%
 
 posix_SOURCES = $(src)posixos.c
 remote_SOURCES = $(src)remote-stub.c
@@ -105,7 +105,7 @@ CLEANSPACE = $(call RM.cmd,$(OBJECTS) $(PROG) $(BUILT_SOURCES))
 # Load overrides for the above variables.
 include $(firstword $(wildcard $(SRCDIR)/mk/$(lastword $(subst -, ,$(MAKE_HOST)).mk) $(OUTDIR)mk/Posix.mk $(SRCDIR)/mk/Posix.mk))
 
-VERSION = 4.3
+VERSION = %VERSION%
 
 VPATH = $(SRCDIR)
 
@@ -133,114 +133,3 @@ $(filter %.h,$(BUILT_SOURCES)): %.h : %.in.h
 	$(call CP.cmd,$<,$@)
 
 .PHONY: all check clean
-
-# --------------- DEPENDENCIES
-#
-
-# src/.deps/amiga.Po
-# dummy
-
-# src/.deps/ar.Po
-# dummy
-
-# src/.deps/arscan.Po
-# dummy
-
-# src/.deps/commands.Po
-# dummy
-
-# src/.deps/default.Po
-# dummy
-
-# src/.deps/dir.Po
-# dummy
-
-# src/.deps/expand.Po
-# dummy
-
-# src/.deps/file.Po
-# dummy
-
-# src/.deps/function.Po
-# dummy
-
-# src/.deps/getopt.Po
-# dummy
-
-# src/.deps/getopt1.Po
-# dummy
-
-# src/.deps/guile.Po
-# dummy
-
-# src/.deps/hash.Po
-# dummy
-
-# src/.deps/implicit.Po
-# dummy
-
-# src/.deps/job.Po
-# dummy
-
-# src/.deps/load.Po
-# dummy
-
-# src/.deps/loadapi.Po
-# dummy
-
-# src/.deps/main.Po
-# dummy
-
-# src/.deps/misc.Po
-# dummy
-
-# src/.deps/output.Po
-# dummy
-
-# src/.deps/posixos.Po
-# dummy
-
-# src/.deps/read.Po
-# dummy
-
-# src/.deps/remake.Po
-# dummy
-
-# src/.deps/remote-cstms.Po
-# dummy
-
-# src/.deps/remote-stub.Po
-# dummy
-
-# src/.deps/rule.Po
-# dummy
-
-# src/.deps/signame.Po
-# dummy
-
-# src/.deps/strcache.Po
-# dummy
-
-# src/.deps/variable.Po
-# dummy
-
-# src/.deps/version.Po
-# dummy
-
-# src/.deps/vms_exit.Po
-# dummy
-
-# src/.deps/vms_export_symbol.Po
-# dummy
-
-# src/.deps/vms_progname.Po
-# dummy
-
-# src/.deps/vmsfunctions.Po
-# dummy
-
-# src/.deps/vmsify.Po
-# dummy
-
-# src/.deps/vpath.Po
-# dummy
