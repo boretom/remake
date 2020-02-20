@@ -35,7 +35,7 @@ To build documentation you need:
 
 Add that to the `apt-get` or `yum` command above.
 
-# Simplicfied approach
+# Simplified approach
 
 
    $ $SHELL ./autogen.sh
