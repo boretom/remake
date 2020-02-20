@@ -1,4 +1,5 @@
 /Makefile
+/Makefile.in
 /alloca.h
 /fcntl.h
 /limits.h
