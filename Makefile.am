@@ -162,6 +162,7 @@ EXTRA_DIST =	ChangeLog README build.sh build.cfg.in $(man_MANS) \
 
 # --------------- Generate the Guile default module content
 
+#: Generate the Guile module
 src/guile.$(OBJEXT): src/gmk-default.h
 src/gmk-default.h: $(top_srcdir)/src/gmk-default.scm
 	(echo 'static const char *const GUILE_module_defn = " '\\ \
@@ -171,8 +172,7 @@ src/gmk-default.h: $(top_srcdir)/src/gmk-default.scm
 
 # --------------- Local DIST Section
 
-# Install the mk and tests subdirectories
-#
+#: Install the mk and tests subdirectories
 dist-hook:
 	(cd $(top_srcdir); \
 	 sub=`find tests/scripts -follow \( -name .git -o -name .deps -o -name work -o -name .gitignore -o -name \*.orig -o -name \*.rej -o -name \*~ -o -name \*.out -o -name Makefile \) -prune -o -type f -print`; \
@@ -182,6 +182,7 @@ dist-hook:
 
 # --------------- Local CHECK Section
 
+#: run regression tests and show a banner
 check-local: check-regression
 	@banner=" Regression PASSED: GNU Make $(VERSION) ($(MAKE_HOST)) built with $(CC) "; \
 	dashes=`echo "$$banner" | sed s/./=/g`; \
@@ -201,6 +202,7 @@ MAKETESTFLAGS =
 
 .PHONY: check-regression
 
+#: run regression tests in tests/scripts
 check-regression: tests/config-flags.pm
 	@if test -f '$(top_srcdir)/tests/run_make_tests'; then \
 	  ulimit -n 128; \
@@ -237,7 +239,7 @@ README:
 GIT2CL = ./git2cl
 if MAINTAINER_MODE
 
-# create ChangeLog for distirbution from 'git log'
+#: create ChangeLog for distribution from 'git log'
 ChangeLog:
 	git log --pretty --numstat --summary | $(GIT2CL) > $@
 

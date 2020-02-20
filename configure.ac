@@ -332,7 +332,6 @@ if test "$have_readline" != yes; then
    AC_MSG_ERROR([GNU Readline and its headers files are needed. See http://cnswww.cns.cwru.edu/php/chet/readline/rltop.html])
 fi
 
-VL_LIB_READLINE
 AC_MSG_CHECKING(for tilde_expand() in <readline/readline.h>)
 AC_TRY_RUN([
 #include <stdio.h>
