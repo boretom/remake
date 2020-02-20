@@ -1,0 +1,9 @@
+/Makefile
+/alloca.h
+/fcntl.h
+/limits.h
+/stdio.h
+/stdlib.h
+/string.h
+/sys
+/unistd.h

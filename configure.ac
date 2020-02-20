@@ -16,7 +16,14 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http://www.gnu.org/licenses/>.
 
-AC_INIT([remake],[4.3+dbg-1.4],[https://github.com/rocky/remake/issues])
+define(_MAKE_VERSION_, 4.3)
+AC_INIT([remake],[_MAKE_VERSION_+dbg-1.4],[https://github.com/rocky/remake/issues])
+
+# These are used in maintMakefile
+MAKE_VERSION=_MAKE_VERSION_
+MAKE_PACKAGE=make
+AC_SUBST(MAKE_VERSION)
+AC_SUBST(MAKE_PACKAGE)
 
 AC_PREREQ([2.69])
 
@@ -180,7 +187,7 @@ AC_FUNC_SETVBUF_REVERSED
 AC_CHECK_FUNCS([strcasecmp strncasecmp strcmpi strncmpi stricmp strnicmp])
 
 # Tell automake about this, so it can build the right .c files.
-AM_CONDITIONAL([USE_LOCAL_GLOB], [test "$make_cv_sys_gnu_glob" = no])+
+AM_CONDITIONAL([USE_LOCAL_GLOB], [test "$make_cv_sys_gnu_glob" = no])
 
 # TOMTOM let's see if that help
 AC_FUNC_VPRINTF
