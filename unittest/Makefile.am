@@ -12,6 +12,7 @@ test_profile_LDADD = \
 	../src/hash.o \
 	../src/profile.o \
 	../src/strcache.o \
+	../lib/libgnu.a \
 	@LIBINTL@
 
 check_PROGRAMS = test_profile
