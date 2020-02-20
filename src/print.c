@@ -1,6 +1,6 @@
 /* Output or logging functions for GNU Make.
 
-Copyright (C) 2005, 2007, 2008 R. Bernstein <rocky@gnu.org>
+Copyright (C) 2005, 2007, 2008, 2020 R. Bernstein <rocky@gnu.org>
 This file is part of GNU Make (remake variant).
 Copyright (C) 2004, 2005, 2007, 2008, Free Software Foundation, Inc.
 
@@ -176,32 +176,6 @@ fatal_err (target_stack_node_t *p_call, const char *fmt, ...)
     enter_debugger(p_call, p_target, 2, DEBUG_ERROR_HIT);
   die (MAKE_FAILURE);
 }
-
-#ifndef HAVE_STRERROR
-
-#undef	strerror
-
-char *
-strerror (int errnum)
-{
-  extern int errno;
-#ifdef __APPLE__
-  extern const int sys_nerr;
-#else
-  extern  int sys_nerr;
-#endif // __APPLE__
-#ifndef __DECC
-  extern const char *const sys_errlist[];
-#endif
-  static char buf[] = "Unknown error 12345678901234567890";
-
-  if (errno < sys_nerr)
-    return sys_errlist[errnum];
-
-  sprintf (buf, _("Unknown error %d"), errnum);
-  return buf;
-}
-#endif
 
 /*! Under -d, write a message describing the current IDs.  */
 
