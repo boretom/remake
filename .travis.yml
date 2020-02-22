@@ -1,5 +1,11 @@
 os: linux
 
+# blocklist
+# don't build CI testing branches
+branches:
+  except:
+  - /testing\/sourcehut\/.*/
+
 # 'xenial': one test of 'functions/wildcard' fails
 # On bionic it works out of the box
 dist: bionic
