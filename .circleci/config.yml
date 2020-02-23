@@ -20,10 +20,10 @@ jobs:
           command: 'make && make check'
 
 workflows:
-    version: 2
-    just_run:
-        jobs:
-            - build
-                filters:
-                    branches:
-                        only: testing/circleci/1ststeps
+  version: 2
+  just_run:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: /testing\/circleci\/.*/
