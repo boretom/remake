@@ -1,5 +1,8 @@
 language: c
 
+# just to make the config validator happy
+os: linux
+
 compiler:
   - gcc
 
@@ -7,7 +10,7 @@ addons:
   homebrew:
     update: true
     packages:
-      - autoconf automake gettext gcc guile lzip pkg-config readline texinfo
+      - autoconf automake gettext guile lzip pkg-config readline texinfo
   apt:
     packages:
       - autopoint gettext libreadline-dev texinfo wget
